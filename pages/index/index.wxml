@@ -1,0 +1,51 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="name">
+    <view class="label">姓名：</view>
+    <input disabled='{{disabled}}' class='{{disabled ? "disabled":""}}'/>
+  </view>
+  <view class="phone">
+    <view class="label">手机号：</view>
+    <input disabled='{{disabled}}' class='{{disabled ? "disabled":""}}'/>
+  </view>
+  <view class="submit">
+    <button disabled='{{disabled}}' class='{{disabled ? "disabled":""}}'>提交</button>
+  </view>
+
+  <view class="prizeNumber">
+    抽奖号码：1213131
+  </view>
+
+  <view class="luckDraw">
+    <view class="luck-box">
+    <view class="luck-border"></view>
+       <view class="luckRoll">
+
+    <view class="wrap">
+        <view class='roll-wrap,{{start?"start":""}},{{stop?"stop":""}},{{restart?"restart":""}}'
+        style='top:{{marginTop}}px'>
+          <view class="roll-item" wx:for='{{loginlist}}'
+            wx:for-item="item" 
+            wx:for-index="index"
+            wx:key="key">{{item.prizeNumber}}
+          </view>
+        </view>
+
+        <view class='roll-wrap,roll2'
+        style='top:{{marginTop2}}px'>
+          <view class='roll-item,{{item.selected?"selected":""}}' wx:for='{{loginlist}}'
+            wx:for-item="item" 
+            wx:for-index="index"
+            wx:key="key">{{item.prizeNumber}}
+          </view>
+        </view>
+    </view>
+      
+    </view>
+    </view>
+   
+    <view class="start-btn">
+      <button bindtap="startLuck">开始</button>
+    </view>
+  </view>    
+</view>
