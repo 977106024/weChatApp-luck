@@ -69,22 +69,25 @@ Page({
       return
     }
     
+    this.clearSelectedStyle()
     let run = ()=>{
       this.backOrigin()
-      let index = this.getSelectedIndex()
-      this.setSelectedStyle(index)
-      let timerId = setTimeout(run,500)
+      // let index = this.getSelectedIndex()
+      // this.setSelectedStyle(index)
+      let timerId = setTimeout(run,200)
       this.setData({
         timerId:timerId
       })
     }
     run()
 
+    let luckDelay = Math.floor((Math.random() * 2500) + 1500)
+    console.log(luckDelay)
     setTimeout(()=>{
       clearTimeout(this.data.timerId)
       this.data.timerId = undefined
       this.getSelectedValue()
-    },3000)
+    }, luckDelay)
   },
   getListHeight(){
     let _this = this
@@ -114,19 +117,27 @@ Page({
     //减去默认的30 /30 就知道了选中项的下标
     let index = Math.abs(currentList - 30) / 30
     //大于5说明是第二个列表
-    if (index > 5) { index = index - 5 } //减去上一个列表总数 就是当前列表坐标 
+    if (index >= 5) { index = index - 5 } //减去上一个列表总数 就是当前列表坐标 
     return index
   },
   getSelectedValue(){
     let index = this.getSelectedIndex()
     let luckNumber = this.data.loginlist[index] //取出选中项
-    // this.setSelectedStyle(index)
+    this.setSelectedStyle(index)
     console.log(luckNumber)    
   },
   setSelectedStyle(index){
     let loginlist = this.data.loginlist
     loginlist[index].selected = true
-    console.log(index)
+    this.setData({
+      loginlist:loginlist
+    })
+  },
+  clearSelectedStyle(){
+    let loginlist = this.data.loginlist
+    loginlist.forEach(item => {
+      item.selected = false
+    })
     this.setData({
       loginlist:loginlist
     })

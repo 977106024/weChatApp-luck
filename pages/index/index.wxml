@@ -22,9 +22,9 @@
        <view class="luckRoll">
 
     <view class="wrap">
-        <view class='roll-wrap,{{start?"start":""}},{{stop?"stop":""}},{{restart?"restart":""}}'
+        <view class='roll-wrap'
         style='top:{{marginTop}}px'>
-          <view class="roll-item" wx:for='{{loginlist}}'
+          <view class='roll-item,{{item.selected?"selected":""}}' wx:for='{{loginlist}}'
             wx:for-item="item" 
             wx:for-index="index"
             wx:key="key">{{item.prizeNumber}}
