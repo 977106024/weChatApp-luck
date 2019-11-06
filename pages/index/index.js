@@ -9,7 +9,7 @@ Page({
     stop:false,
     restart:false,
     timerId:undefined,
-    marginTop:30,
+    marginTop:0,
     marginTop2: 0,
     listHeight:0,
     admin:1,//管理人员
@@ -34,6 +34,14 @@ Page({
         name: '5',
         prizeNumber: 555555
       },
+      {
+        name: '6',
+        prizeNumber: 666666
+      },
+      {
+        name: '7',
+        prizeNumber: 777777
+      },
     ],//签到名单
 
     motto: 'Hello World',
@@ -47,14 +55,14 @@ Page({
 
   backOrigin(){
     let { listHeight } = this.data
-    let marginTop = this.data.marginTop - 30
+    let marginTop = this.data.marginTop -30
     let marginTop2 = this.data.marginTop2 - 30
     if (Math.abs(marginTop) > listHeight) {
-      marginTop = listHeight - 30
+      marginTop = listHeight-30
       this.setData({marginTop: marginTop})
     }
     if (Math.abs(marginTop2) > listHeight) {
-      marginTop2 = listHeight - 30
+      marginTop2 = listHeight-30
       this.setData({marginTop2: marginTop2})
     }
     this.setData({
@@ -96,16 +104,15 @@ Page({
     query.exec(function (res) {
       let listHeight = res[0].height
       _this.setData({
-        marginTop2: listHeight + 30,
+        marginTop2: listHeight,
         listHeight: listHeight
       })
     })
   },
   getSelectedList(){
     const { marginTop, marginTop2 } = this.data
-    console.log(marginTop - 30, marginTop2 - 30) // 每个item高度30
     let currentList //当前选中项所在的列表
-    if (marginTop < 0 || (marginTop - 30) == 0) { //只有是负数或者0的时候 才会是当前列表（在屏幕上）
+    if (marginTop < 0 || marginTop == 0) { //只有是负数或者0的时候 才会是当前列表（在屏幕上）
       currentList = marginTop
     } else {
       currentList = marginTop2
@@ -114,11 +121,12 @@ Page({
   },
   getSelectedIndex(){
     let currentList = this.getSelectedList()
-    //减去默认的30 /30 就知道了选中项的下标
-    let index = Math.abs(currentList - 30) / 30
+    let loginNumber = this.data.loginlist.length
+    //总高度/30 + 3默认在前面的3个 就知道了选中项的下标
+    let index = Math.abs(currentList) / 30 + 3
     //大于5说明是第二个列表
-    if (index >= 5) { index = index - 5 } //减去上一个列表总数 就是当前列表坐标 
-    return index
+    if (index >= loginNumber) { index = index - loginNumber } //减去上一个列表总数 就是当前列表坐标
+    return parseInt(index)
   },
   getSelectedValue(){
     let index = this.getSelectedIndex()
@@ -127,6 +135,7 @@ Page({
     console.log(luckNumber)    
   },
   setSelectedStyle(index){
+    console.log(index)
     let loginlist = this.data.loginlist
     loginlist[index].selected = true
     this.setData({
