@@ -27,7 +27,8 @@
     <view class="wrap">
         <view class='roll-wrap'
         style='top:{{marginTop}}px'>
-          <view class='roll-item,{{item.selected?"selected":""}}' wx:for='{{loginlist}}'
+             <view class='roll-item,{{item.selected?"selected":""}},{{item.previous?"previous":""}},{{item.next?"next":""}}'
+          wx:for='{{loginlist}}'
             wx:for-item="item" 
             wx:for-index="index"
             wx:key="key">{{item.prizeNumber}}
@@ -36,7 +37,8 @@
 
         <view class='roll-wrap,roll2'
         style='top:{{marginTop2}}px'>
-          <view class='roll-item,{{item.selected?"selected":""}}' wx:for='{{loginlist}}'
+           <view class='roll-item,{{item.selected?"selected":""}},{{item.previous?"previous":""}},{{item.next?"next":""}}'
+          wx:for='{{loginlist}}'
             wx:for-item="item" 
             wx:for-index="index"
             wx:key="key">{{item.prizeNumber}}

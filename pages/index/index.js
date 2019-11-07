@@ -16,31 +16,38 @@ Page({
     loginlist:[
       {
         name:'1',
-        prizeNumber:111111
+        prizeNumber:111111,
+        index:-6
       },
       {
         name: '2',
-        prizeNumber: 222222
+        prizeNumber: 222222,
+        index:-5,
       },
       {
         name: '3',
-        prizeNumber: 333333
+        prizeNumber: 333333,
+        index: -4,
       },
       {
         name: '4',
-        prizeNumber: 444444
+        prizeNumber: 444444,
+        index: -3,
       },
       {
         name: '5',
-        prizeNumber: 555555
+        prizeNumber: 555555,
+        index:-2
       },
       {
         name: '6',
-        prizeNumber: 666666
+        prizeNumber: 666666,
+        index: -1
       },
       {
         name: '7',
-        prizeNumber: 777777
+        prizeNumber: 777777,
+        index: 0
       },
     ],//签到名单
 
@@ -77,11 +84,11 @@ Page({
       return
     }
     
-    this.clearSelectedStyle()
+    
     let run = ()=>{
       this.backOrigin()
-      // let index = this.getSelectedIndex()
-      // this.setSelectedStyle(index)
+      this.clearSelectedStyle()
+      this.setSelectedStyle()
       let timerId = setTimeout(run,200)
       this.setData({
         timerId:timerId
@@ -89,7 +96,7 @@ Page({
     }
     run()
 
-    let luckDelay = Math.floor((Math.random() * 2500) + 1500)
+    let luckDelay = Math.floor((Math.random() * 5000) + 3000)
     console.log(luckDelay)
     setTimeout(()=>{
       clearTimeout(this.data.timerId)
@@ -134,10 +141,18 @@ Page({
     this.setSelectedStyle(index)
     console.log(luckNumber)    
   },
-  setSelectedStyle(index){
-    console.log(index)
+  setSelectedStyle(i){
+    let index = i || this.getSelectedIndex()
     let loginlist = this.data.loginlist
+    let previous = index -1
+    let next = index +1
+    if(previous === -1){previous = loginlist.length-1}
+    if(next >= loginlist.length){next = 0}
+    console.log(next)
+    loginlist[previous].previous = true
     loginlist[index].selected = true
+    loginlist[next].next = true
+
     this.setData({
       loginlist:loginlist
     })
@@ -146,6 +161,8 @@ Page({
     let loginlist = this.data.loginlist
     loginlist.forEach(item => {
       item.selected = false
+      item.previous = false
+      item.next = false
     })
     this.setData({
       loginlist:loginlist
